@@ -1,5 +1,8 @@
 {
   "version": 2,
+  "builds": [
+    { "src": "**/*", "use": "@vercel/static" }
+  ],
   "headers": [
     {
       "source": "/public/fonts/(.*)",
