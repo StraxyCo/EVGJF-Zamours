@@ -1,0 +1,84 @@
+{
+  "phase1": {
+    "david": [
+      {
+        "id": 1,
+        "questionText": "Quel est ton film préféré ?",
+        "answers": ["La Grande Vadrouille", "Inception", "Intouchables"]
+      },
+      {
+        "id": 2,
+        "questionText": "Dans quelle ville aimerais-tu vivre ?",
+        "answers": ["Paris", "Barcelone", "Tokyo"]
+      },
+      {
+        "id": 3,
+        "questionText": "Quel est ton sport préféré ?",
+        "answers": ["Le football", "Le tennis", "La natation"]
+      }
+    ],
+    "juliette": [
+      {
+        "id": 1,
+        "questionText": "Quelle est ta saison préférée ?",
+        "answers": ["L'été", "Le printemps", "L'automne"]
+      },
+      {
+        "id": 2,
+        "questionText": "Comment définis-tu la soirée idéale ?",
+        "answers": ["Dîner en amoureux", "Soirée entre amis", "Film à la maison"]
+      },
+      {
+        "id": 3,
+        "questionText": "Quel est ton pêché mignon ?",
+        "answers": ["Le chocolat", "Les chips", "La glace"]
+      }
+    ]
+  },
+  "phase2": {
+    "juliette": [
+      { "id": 1,  "questionLabel": "Sa couleur préférée",                   "expectedAnswer": "Le bleu marine" },
+      { "id": 2,  "questionLabel": "Son plat préféré",                       "expectedAnswer": "Le cassoulet" },
+      { "id": 3,  "questionLabel": "Sa chanson préférée",                    "expectedAnswer": "Bohemian Rhapsody" },
+      { "id": 4,  "questionLabel": "Son animal préféré",                     "expectedAnswer": "Le chien" },
+      { "id": 5,  "questionLabel": "Sa destination de rêve",                 "expectedAnswer": "Le Japon" },
+      { "id": 6,  "questionLabel": "Son film préféré",                       "expectedAnswer": "Inception" },
+      { "id": 7,  "questionLabel": "Son sport préféré",                      "expectedAnswer": "Le football" },
+      { "id": 8,  "questionLabel": "Sa boisson préférée",                    "expectedAnswer": "Le café" },
+      { "id": 9,  "questionLabel": "Son héros d'enfance",                    "expectedAnswer": "Spiderman" },
+      { "id": 10, "questionLabel": "Sa pire peur",                           "expectedAnswer": "Les araignées" },
+      { "id": 11, "questionLabel": "Son surnom d'enfance",                   "expectedAnswer": "Dodo" },
+      { "id": 12, "questionLabel": "Sa personnalité préférée",               "expectedAnswer": "Kylian Mbappé" },
+      { "id": 13, "questionLabel": "Le plat qu'il déteste",                  "expectedAnswer": "Les épinards" },
+      { "id": 14, "questionLabel": "Ce qu'il fait en premier le matin",      "expectedAnswer": "Regarder son téléphone" },
+      { "id": 15, "questionLabel": "Son rêve le plus fou",                   "expectedAnswer": "Voyager dans l'espace" },
+      { "id": 16, "questionLabel": "Sa musique de réveil",                   "expectedAnswer": "Eye of the Tiger" },
+      { "id": 17, "questionLabel": "Son talent caché",                       "expectedAnswer": "Imiter les accents" },
+      { "id": 18, "questionLabel": "Ce qui le met de bonne humeur",          "expectedAnswer": "Le soleil" },
+      { "id": 19, "questionLabel": "Sa plus grande fierté",                  "expectedAnswer": "Son diplôme d'ingénieur" },
+      { "id": 20, "questionLabel": "Le mot qui le définit",                  "expectedAnswer": "Déterminé" }
+    ],
+    "david": [
+      { "id": 1,  "questionLabel": "Sa couleur préférée",                   "expectedAnswer": "Le rose poudré" },
+      { "id": 2,  "questionLabel": "Son plat préféré",                       "expectedAnswer": "La raclette" },
+      { "id": 3,  "questionLabel": "Sa chanson préférée",                    "expectedAnswer": "Les Champs-Élysées" },
+      { "id": 4,  "questionLabel": "Son animal préféré",                     "expectedAnswer": "Le chat" },
+      { "id": 5,  "questionLabel": "Sa destination de rêve",                 "expectedAnswer": "L'Islande" },
+      { "id": 6,  "questionLabel": "Son film préféré",                       "expectedAnswer": "Le Roi Lion" },
+      { "id": 7,  "questionLabel": "Son sport préféré",                      "expectedAnswer": "La danse" },
+      { "id": 8,  "questionLabel": "Sa boisson préférée",                    "expectedAnswer": "Le thé vert" },
+      { "id": 9,  "questionLabel": "Son héroïne d'enfance",                  "expectedAnswer": "Hermione Granger" },
+      { "id": 10, "questionLabel": "Sa pire peur",                           "expectedAnswer": "Les hauteurs" },
+      { "id": 11, "questionLabel": "Son surnom d'enfance",                   "expectedAnswer": "Juju" },
+      { "id": 12, "questionLabel": "Sa personnalité préférée",               "expectedAnswer": "Karine Le Marchand" },
+      { "id": 13, "questionLabel": "Le plat qu'elle déteste",                "expectedAnswer": "Le foie gras" },
+      { "id": 14, "questionLabel": "Ce qu'elle fait en premier le matin",    "expectedAnswer": "Se brosser les dents" },
+      { "id": 15, "questionLabel": "Son rêve le plus fou",                   "expectedAnswer": "Ouvrir une librairie" },
+      { "id": 16, "questionLabel": "Sa musique de réveil",                   "expectedAnswer": "Une playlist pop" },
+      { "id": 17, "questionLabel": "Son talent caché",                       "expectedAnswer": "Dessiner" },
+      { "id": 18, "questionLabel": "Ce qui la met de bonne humeur",          "expectedAnswer": "Un message inattendu" },
+      { "id": 19, "questionLabel": "Sa plus grande fierté",                  "expectedAnswer": "Sa famille" },
+      { "id": 20, "questionLabel": "Le mot qui la définit",                  "expectedAnswer": "Bienveillante" }
+    ]
+  }
+}

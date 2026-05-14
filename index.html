@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Les Z'Amours</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- ============================================================
+       SCREEN 00a — SPLASH
+  ============================================================ -->
+  <section class="screen active" id="screen-splash">
+    <img class="logo" src="/public/images/zamours-logo.png" alt="Les Z'Amours">
+    <button class="btn-large" id="btn-splash">DÉMARRER</button>
+  </section>
+
+  <!-- ============================================================
+       SCREEN 00b — GÉNÉRIQUE
+  ============================================================ -->
+  <section class="screen" id="screen-generique">
+    <video id="generique-video" src="/public/videos/zamours-generique.mp4" playsinline></video>
+    <div id="generique-btn-wrap">
+      <button class="btn-large" id="btn-generique">COMMENCER</button>
+    </div>
+    <button class="btn-large" id="generique-fallback-btn">▶ LANCER LA VIDÉO</button>
+  </section>
+
+  <!-- ============================================================
+       TEMPLATE 01 — TITLE SCREEN (dynamic)
+  ============================================================ -->
+  <section class="screen" id="screen-titlescreen">
+    <p class="text-subtitle titlescreen-numero" id="ts-numero"></p>
+    <div class="titlescreen-middle">
+      <img class="sticker sticker-left"  id="ts-sticker-l" src="" alt="">
+      <h1 class="text-major" id="ts-intitule"></h1>
+      <img class="sticker sticker-right" id="ts-sticker-r" src="" alt="">
+    </div>
+    <button class="btn-large" id="btn-titlescreen"></button>
+  </section>
+
+  <!-- ============================================================
+       TEMPLATE 02 — QCM (dynamic)
+  ============================================================ -->
+  <section class="screen" id="screen-qcm">
+    <p class="text-subtitle qcm-numero" id="qcm-numero">QUESTION 1</p>
+    <p class="text-question qcm-question-text" id="qcm-text"></p>
+
+    <div class="qcm-grid">
+
+      <!-- Box 1 — YellowBright -->
+      <div class="qcm-box-wrapper">
+        <div class="qcm-checkbox">
+          <span class="qcm-checkbox-icon"></span>
+        </div>
+        <div class="qcm-box" data-pos="1">
+          <div class="qcm-box-inner">
+            <img class="qcm-bubble-img" src="/public/images/bulleBackground.svg" alt="">
+            <span class="qcm-answer-text"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Box 2 — PurpleMain -->
+      <div class="qcm-box-wrapper">
+        <div class="qcm-checkbox">
+          <span class="qcm-checkbox-icon"></span>
+        </div>
+        <div class="qcm-box" data-pos="2">
+          <div class="qcm-box-inner">
+            <img class="qcm-bubble-img" src="/public/images/bulleBackground.svg" alt="">
+            <span class="qcm-answer-text"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Box 3 — CyanMain -->
+      <div class="qcm-box-wrapper">
+        <div class="qcm-checkbox">
+          <span class="qcm-checkbox-icon"></span>
+        </div>
+        <div class="qcm-box" data-pos="3">
+          <div class="qcm-box-inner">
+            <img class="qcm-bubble-img" src="/public/images/bulleBackground.svg" alt="">
+            <span class="qcm-answer-text"></span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- .qcm-grid -->
+
+    <div class="qcm-next-wrap" id="qcm-next-wrap" style="display:none">
+      <button class="btn-small" id="btn-qcm-next">SUIVANT</button>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SCORE SCREEN (dynamic)
+  ============================================================ -->
+  <section class="screen" id="screen-score">
+    <p class="score-line" id="score-line1"></p>
+    <p class="score-line" id="score-line2"></p>
+    <button class="btn-large" id="btn-score" style="margin-top:60px">SUIVANT</button>
+  </section>
+
+  <!-- ============================================================
+       TEMPLATE 03 — FINALE (dynamic)
+  ============================================================ -->
+  <section class="screen" id="screen-finale">
+
+    <div class="finale-left">
+      <p class="finale-question-label" id="finale-question"></p>
+      <div>
+        <p class="finale-answer-label">RÉPONSE ATTENDUE</p>
+        <p class="finale-answer-value" id="finale-answer"></p>
+      </div>
+      <div class="finale-actions">
+        <button class="btn-action btn-success" id="btn-finale-success">
+          RÉUSSI <span class="btn-icon btn-icon-check"></span>
+        </button>
+        <button class="btn-action btn-failure" id="btn-finale-failure">
+          RATÉ <span class="btn-icon btn-icon-close"></span>
+        </button>
+        <button class="btn-action btn-skip" id="btn-finale-skip">
+          PASSÉ <span class="btn-icon btn-icon-pass"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Hearts: 3 columns in quinconce -->
+    <div class="finale-right">
+      <div class="hearts-container">
+        <!-- Column 0 (left) -->
+        <div class="hearts-col" id="hearts-col-0">
+          <div class="heart-icon state-idle"></div>
+          <div class="heart-icon state-idle"></div>
+          <div class="heart-icon state-idle"></div>
+        </div>
+        <!-- Column 1 (centre, offset) -->
+        <div class="hearts-col hearts-col-mid" id="hearts-col-1">
+          <div class="heart-icon state-idle"></div>
+          <div class="heart-icon state-idle"></div>
+          <div class="heart-icon state-idle"></div>
+        </div>
+        <!-- Column 2 (right) -->
+        <div class="hearts-col" id="hearts-col-2">
+          <div class="heart-icon state-idle"></div>
+          <div class="heart-icon state-idle"></div>
+          <div class="heart-icon state-idle"></div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ============================================================
+       TEMPLATE 04 — END SCREEN (dynamic)
+  ============================================================ -->
+  <section class="screen" id="screen-endscreen">
+    <img class="sticker sticker-left"  id="end-sticker-l" src="" alt="">
+    <div class="endscreen-middle">
+      <h1 class="text-mega" id="end-label"></h1>
+      <button class="btn-large" id="btn-endscreen"></button>
+    </div>
+    <img class="sticker sticker-right" id="end-sticker-r" src="" alt="">
+  </section>
+
+</div><!-- #app -->
+<script src="/js/main.js"></script>
+</body>
+</html>

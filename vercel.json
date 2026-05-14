@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "headers": [
+    {
+      "source": "/public/fonts/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000" }]
+    }
+  ]
+}
