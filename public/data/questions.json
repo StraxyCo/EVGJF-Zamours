@@ -13,18 +13,18 @@
       },
       {
         "id": 3,
-        "questionText": "[PLACEHOLDER] Question 3 sur Juliette",
-        "answers": ["Réponse A", "Réponse B", "Réponse C"]
+        "questionText": "Si tu devais comparer son caractère à une météo, ce serait quoi ?",
+        "answers": ["Un grand soleil d'été (toujours de bonne humeur)", "Un orage tropical (ça pète fort, mais ça passe vite)", "Un temps de Bretagne (on ne sait jamais à quoi s'attendre)"]
       },
       {
         "id": 4,
-        "questionText": "[PLACEHOLDER] Question 4 sur Juliette",
-        "answers": ["Réponse A", "Réponse B", "Réponse C"]
+        "questionText": "En cas de dispute, comment essaie-t-elle de la régler ?",
+        "answers": ["Elle veut tout mettre à plat tout de suite, quitte à hausser le ton", "Elle boude dans son coin et attend que tu viennes t'excuser", "Elle tente une blague (parfois risquée) pour détendre l'atmosphère"]
       },
       {
         "id": 5,
-        "questionText": "[PLACEHOLDER] Question 5 sur Juliette",
-        "answers": ["Réponse A", "Réponse B", "Réponse C"]
+        "questionText": "Sa réaction typique quand elle perd à un jeu de société ?",
+        "answers": ["Elle accuse le jeu ou les dés d'être truqués", "Elle s'en fiche royalement (en apparence)", "Elle exige une deuxième partie immédiatement"]
       }
     ],
     "juliette": [
@@ -40,18 +40,18 @@
       },
       {
         "id": 3,
-        "questionText": "[PLACEHOLDER] Question 3 sur David",
-        "answers": ["Réponse A", "Réponse B", "Réponse C"]
+        "questionText": "S'il devait gagner un record du monde, ce serait lequel ?",
+        "answers": ["Celui de la plus longue sieste jamais enregistrée", "Celui du gars qui s'endort le plus en soirée", "Celui du plus gros zizi"]
       },
       {
         "id": 4,
-        "questionText": "[PLACEHOLDER] Question 4 sur David",
-        "answers": ["Réponse A", "Réponse B", "Réponse C"]
+        "questionText": "Si on proposait à David 10 millions d'euros pour ne plus te voir pendant 5 ans, que ferait-il ?",
+        "answers": ["\"Je garde la personne, l'argent ne remplace pas l'amour.\"", "\"C'est beaucoup trop d'argent, je signe tout de suite !\"", "\"On prend l'argent et on se retrouve dans 5 ans, c'est pas la mort !\""]
       },
       {
         "id": 5,
-        "questionText": "[PLACEHOLDER] Question 5 sur David",
-        "answers": ["Réponse A", "Réponse B", "Réponse C"]
+        "questionText": "Face à une énorme araignée dans la chambre à 2h du matin, il fait quoi ?",
+        "answers": ["Il t'appelle au secours (ou appelle le voisin)", "Il l'attrape avec un verre pour la relâcher héroïquement dehors", "Il change de pièce et décide que cette chambre appartient désormais à l'araignée"]
       }
     ]
   },
