@@ -3,55 +3,55 @@
     "david": [
       {
         "id": 1,
-        "questionText": "Quel est ton film préféré ?",
-        "answers": ["La Grande Vadrouille", "Inception", "Intouchables"]
+        "questionText": "Quand Juliette a tort, elle…",
+        "answers": ["L'admet directement", "Trouve une façon d'avoir quand même raison", "C'est théorique, ça n'arrive pas"]
       },
       {
         "id": 2,
-        "questionText": "Dans quelle ville aimerais-tu vivre ?",
-        "answers": ["Paris", "Barcelone", "Tokyo"]
+        "questionText": "Quand Juliette n'aime pas quelqu'un, elle…",
+        "answers": ["Le dit cash", "Fait semblant et bitche après", "Il paraît que ça se voit sur son visage"]
       },
       {
         "id": 3,
-        "questionText": "Quel est ton sport préféré ?",
-        "answers": ["Le football", "Le tennis", "La natation"]
+        "questionText": "[PLACEHOLDER] Question 3 sur Juliette",
+        "answers": ["Réponse A", "Réponse B", "Réponse C"]
       },
       {
         "id": 4,
-        "questionText": "Quel est ton repas préféré ?",
-        "answers": ["La pizza", "Le steak frites", "Les sushis"]
+        "questionText": "[PLACEHOLDER] Question 4 sur Juliette",
+        "answers": ["Réponse A", "Réponse B", "Réponse C"]
       },
       {
         "id": 5,
-        "questionText": "Comment passes-tu ta journée idéale ?",
-        "answers": ["À la mer", "En montagne", "En ville"]
+        "questionText": "[PLACEHOLDER] Question 5 sur Juliette",
+        "answers": ["Réponse A", "Réponse B", "Réponse C"]
       }
     ],
     "juliette": [
       {
         "id": 1,
-        "questionText": "Quelle est ta saison préférée ?",
-        "answers": ["L'été", "Le printemps", "L'automne"]
+        "questionText": "Quand David a une mauvaise idée, Juliette…",
+        "answers": ["Dit \"chéri non\"", "Le laisse faire et filme", "Elle a la même mauvaise idée"]
       },
       {
         "id": 2,
-        "questionText": "Comment définis-tu la soirée idéale ?",
-        "answers": ["Dîner en amoureux", "Soirée entre amis", "Film à la maison"]
+        "questionText": "Quand David se perd…",
+        "answers": ["Il demande son chemin", "Il affirme qu'il sait où il va", "Il suit le soleil"]
       },
       {
         "id": 3,
-        "questionText": "Quel est ton pêché mignon ?",
-        "answers": ["Le chocolat", "Les chips", "La glace"]
+        "questionText": "[PLACEHOLDER] Question 3 sur David",
+        "answers": ["Réponse A", "Réponse B", "Réponse C"]
       },
       {
         "id": 4,
-        "questionText": "Quel est ton type de musique préféré ?",
-        "answers": ["La pop", "Le rock", "L'électro"]
+        "questionText": "[PLACEHOLDER] Question 4 sur David",
+        "answers": ["Réponse A", "Réponse B", "Réponse C"]
       },
       {
         "id": 5,
-        "questionText": "Quelle est ta destination de vacances rêvée ?",
-        "answers": ["Les Maldives", "New York", "La Toscane"]
+        "questionText": "[PLACEHOLDER] Question 5 sur David",
+        "answers": ["Réponse A", "Réponse B", "Réponse C"]
       }
     ]
   },
