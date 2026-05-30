@@ -51,9 +51,47 @@ const bgMusic = new Audio('/public/audio/background.mp3');
 bgMusic.loop = true;
 
 const sfx = {};
-['questionSuccess', 'questionFailure', 'questionSkip', 'finaleSuccess', 'finaleFailure'].forEach(name => {
+['questionSuccess', 'questionFailure', 'questionSkip', 'finaleSuccess', 'finaleFailure', 'gong'].forEach(name => {
   sfx[name] = new Audio(`/public/audio/${name}.mp3`);
 });
+
+// ================================================================
+// FINALE COUNTDOWN
+// ================================================================
+let finaleTimerInterval = null;
+
+function startFinaleTimer(participant) {
+  stopFinaleTimer();
+  let timeLeft = 60;
+  updateTimerDisplay(timeLeft);
+
+  finaleTimerInterval = setInterval(() => {
+    timeLeft--;
+    updateTimerDisplay(timeLeft);
+
+    if (timeLeft <= 0) {
+      stopFinaleTimer();
+      playSfx('gong');
+      const fs = state.finale[participant];
+      fs.result = 'lost';
+      renderHearts(participant);
+      setTimeout(() => showEndScreen(participant), 1400);
+    }
+  }, 1000);
+}
+
+function stopFinaleTimer() {
+  if (finaleTimerInterval) {
+    clearInterval(finaleTimerInterval);
+    finaleTimerInterval = null;
+  }
+}
+
+function updateTimerDisplay(timeLeft) {
+  const el = document.getElementById('finale-timer');
+  el.textContent = timeLeft;
+  el.classList.toggle('urgent', timeLeft <= 10);
+}
 
 function playBg() { bgMusic.play().catch(() => {}); }
 function playSfx(name) {
@@ -106,19 +144,27 @@ function startGenerique() {
   video.currentTime = 0;
   video.onended = () => { btnWrap.style.display = 'flex'; };
 
+  // Any click on the generique screen reveals the COMMENCER button
+  document.getElementById('screen-generique').onclick = () => {
+    btnWrap.style.display = 'flex';
+  };
+
   const playPromise = video.play();
   if (playPromise !== undefined) {
     playPromise.catch(() => {
       // Autoplay blocked — show tap-to-play fallback
       document.getElementById('generique-fallback-btn').style.display = 'block';
-      document.getElementById('generique-fallback-btn').onclick = () => {
+      document.getElementById('generique-fallback-btn').onclick = (e) => {
+        e.stopPropagation();
         document.getElementById('generique-fallback-btn').style.display = 'none';
         video.play();
       };
     });
   }
 
-  document.getElementById('btn-generique').onclick = () => {
+  document.getElementById('btn-generique').onclick = (e) => {
+    e.stopPropagation();
+    video.pause();
     launchTitleScreen({
       numero: 'PREMIÈRE MANCHE',
       intitule: 'DAVID RÉPOND AUX QUESTIONS',
@@ -286,7 +332,7 @@ function onQCMNext() {
 
 function advanceQCM() {
   state.qcm.qIndex++;
-  if (state.qcm.qIndex >= 3) {
+  if (state.qcm.qIndex >= 5) {
     state.qcm.onComplete();
   } else {
     renderQCM();
@@ -345,7 +391,7 @@ function showScoreScreen(guesser, answerer, onNext) {
   const aName = answerer === 'david' ? 'David' : 'Juliette';
 
   document.getElementById('score-line1').innerHTML =
-    `${gName} a deviné <span class="score-number">${score}/3</span>`;
+    `${gName} a deviné <span class="score-number">${score}/5</span>`;
   document.getElementById('score-line2').textContent =
     `réponses de ${aName} !`;
 
@@ -389,6 +435,7 @@ function launchFinale(participant) {
 
   renderFinale(participant);
   showScreen('screen-finale');
+  startFinaleTimer(participant);
 }
 
 function renderFinale(participant) {
@@ -431,6 +478,7 @@ function finaleAction(participant, action) {
   if (fs.successCount >= 7) {
     fs.hearts[fs.heartIdx] = 'success';
     fs.result = 'won';
+    stopFinaleTimer();
     renderHearts(participant);
     playSfx('finaleSuccess');
     setTimeout(() => showEndScreen(participant), 800);
@@ -439,6 +487,7 @@ function finaleAction(participant, action) {
   if (fs.failureCount >= 3) {
     fs.hearts[fs.heartIdx] = 'failure';
     fs.result = 'lost';
+    stopFinaleTimer();
     renderHearts(participant);
     playSfx('finaleFailure');
     setTimeout(() => showEndScreen(participant), 800);

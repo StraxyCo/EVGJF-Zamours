@@ -15,6 +15,16 @@
         "id": 3,
         "questionText": "Quel est ton sport préféré ?",
         "answers": ["Le football", "Le tennis", "La natation"]
+      },
+      {
+        "id": 4,
+        "questionText": "Quel est ton repas préféré ?",
+        "answers": ["La pizza", "Le steak frites", "Les sushis"]
+      },
+      {
+        "id": 5,
+        "questionText": "Comment passes-tu ta journée idéale ?",
+        "answers": ["À la mer", "En montagne", "En ville"]
       }
     ],
     "juliette": [
@@ -32,6 +42,16 @@
         "id": 3,
         "questionText": "Quel est ton pêché mignon ?",
         "answers": ["Le chocolat", "Les chips", "La glace"]
+      },
+      {
+        "id": 4,
+        "questionText": "Quel est ton type de musique préféré ?",
+        "answers": ["La pop", "Le rock", "L'électro"]
+      },
+      {
+        "id": 5,
+        "questionText": "Quelle est ta destination de vacances rêvée ?",
+        "answers": ["Les Maldives", "New York", "La Toscane"]
       }
     ]
   },
