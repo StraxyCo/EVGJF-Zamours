@@ -91,17 +91,19 @@ function clearSavedState() { localStorage.removeItem('zamours_state'); }
 // FINALE COUNTDOWN
 // ================================================================
 let finaleTimerInterval = null;
+let finaleTimeLeft      = 60;
+let finalePaused        = false;
 
-function startFinaleTimer(participant) {
+function startFinaleTimer(participant, fromTime = 60) {
   stopFinaleTimer();
-  let timeLeft = 60;
-  updateTimerDisplay(timeLeft);
+  finaleTimeLeft = fromTime;
+  updateTimerDisplay(finaleTimeLeft);
 
   finaleTimerInterval = setInterval(() => {
-    timeLeft--;
-    updateTimerDisplay(timeLeft);
+    finaleTimeLeft--;
+    updateTimerDisplay(finaleTimeLeft);
 
-    if (timeLeft <= 0) {
+    if (finaleTimeLeft <= 0) {
       stopFinaleTimer();
       playSfx('gong');
       const fs = state.finale[participant];
@@ -110,6 +112,32 @@ function startFinaleTimer(participant) {
       setTimeout(() => showEndScreen(participant), 1400);
     }
   }, 1000);
+}
+
+function setupPauseButton(participant) {
+  finalePaused = false;
+  renderPauseButton();
+  document.getElementById('btn-finale-pause').onclick = () => {
+    finalePaused = !finalePaused;
+    const actionIds = ['btn-finale-success', 'btn-finale-failure', 'btn-finale-skip'];
+    if (finalePaused) {
+      stopFinaleTimer();
+      actionIds.forEach(id => { document.getElementById(id).disabled = true; });
+    } else {
+      actionIds.forEach(id => { document.getElementById(id).disabled = false; });
+      startFinaleTimer(participant, finaleTimeLeft);
+    }
+    renderPauseButton();
+  };
+}
+
+function renderPauseButton() {
+  const btn = document.getElementById('btn-finale-pause');
+  if (finalePaused) {
+    btn.innerHTML = 'PLAY <span class="btn-icon btn-icon-play"></span>';
+  } else {
+    btn.innerHTML = 'PAUSE <span class="btn-icon btn-icon-pause"></span>';
+  }
 }
 
 function stopFinaleTimer() {
@@ -485,6 +513,7 @@ function launchFinale(participant) {
 
   renderFinale(participant);
   showScreen('screen-finale');
+  setupPauseButton(participant);
   startFinaleTimer(participant);
 }
 
@@ -530,6 +559,7 @@ function finaleAction(participant, action) {
     fs.hearts[fs.heartIdx] = 'success';
     fs.result = 'won';
     stopFinaleTimer();
+    finalePaused = false;
     renderHearts(participant);
     playSfx('finaleSuccess');
     setTimeout(() => showEndScreen(participant), 800);
@@ -539,6 +569,7 @@ function finaleAction(participant, action) {
     fs.hearts[fs.heartIdx] = 'failure';
     fs.result = 'lost';
     stopFinaleTimer();
+    finalePaused = false;
     renderHearts(participant);
     playSfx('finaleFailure');
     setTimeout(() => showEndScreen(participant), 800);
@@ -674,6 +705,7 @@ function restoreFinale(participant) {
   renderHearts(participant);
   renderFinale(participant);
   showScreen('screen-finale');
+  setupPauseButton(participant);
   startFinaleTimer(participant);
 }
 
