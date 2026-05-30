@@ -15,6 +15,7 @@
   <section class="screen active" id="screen-splash">
     <img class="logo" src="/public/images/zamours-logo.png" alt="Les Z'Amours">
     <button class="btn-large" id="btn-splash">DÉMARRER</button>
+    <button class="btn-small" id="btn-resume" style="display:none; margin-top:24px; opacity:0.85">↩ REPRENDRE LA PARTIE</button>
   </section>
 
   <!-- ============================================================
@@ -169,6 +170,11 @@
   </section>
 
 </div><!-- #app -->
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+  }
+</script>
 <script src="/js/main.js"></script>
 </body>
 </html>

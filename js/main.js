@@ -56,6 +56,38 @@ const sfx = {};
 });
 
 // ================================================================
+// PERSISTENCE — localStorage
+// ================================================================
+function saveState(step) {
+  try {
+    localStorage.setItem('zamours_state', JSON.stringify({
+      step,
+      phase1: state.phase1,
+      qcm: {
+        mode:     state.qcm.mode,
+        guesser:  state.qcm.guesser,
+        answerer: state.qcm.answerer,
+        qIndex:   state.qcm.qIndex,
+      },
+      finale: {
+        juliette: { ...state.finale.juliette },
+        david:    { ...state.finale.david },
+      },
+    }));
+  } catch(e) {}
+}
+
+function loadSavedState() {
+  try {
+    const raw = localStorage.getItem('zamours_state');
+    return raw ? JSON.parse(raw) : null;
+  } catch(e) { return null; }
+}
+
+function hasSavedState()  { return !!loadSavedState(); }
+function clearSavedState() { localStorage.removeItem('zamours_state'); }
+
+// ================================================================
 // FINALE COUNTDOWN
 // ================================================================
 let finaleTimerInterval = null;
@@ -128,10 +160,19 @@ function showScreen(id) {
 // ================================================================
 function initSplash() {
   document.getElementById('btn-splash').onclick = () => {
+    clearSavedState();
     playBg();
     showScreen('screen-generique');
     startGenerique();
   };
+
+  const resumeBtn = document.getElementById('btn-resume');
+  if (hasSavedState()) {
+    resumeBtn.style.display = 'block';
+    resumeBtn.onclick = () => { playBg(); resumeGame(); };
+  } else {
+    resumeBtn.style.display = 'none';
+  }
 }
 
 // ================================================================
@@ -165,43 +206,7 @@ function startGenerique() {
   document.getElementById('btn-generique').onclick = (e) => {
     e.stopPropagation();
     video.pause();
-    launchTitleScreen({
-      numero: 'PREMIÈRE MANCHE',
-      intitule: 'DAVID RÉPOND AUX QUESTIONS',
-      sticker: 'david',
-      btnLabel: "C'EST PARTI",
-      onNext: () => launchQCMAnswer('david', () => {
-        launchTitleScreen({
-          numero: 'DEUXIÈME MANCHE',
-          intitule: 'JULIETTE RÉPOND AUX QUESTIONS',
-          sticker: 'juliette',
-          btnLabel: "C'EST PARTI",
-          onNext: () => launchQCMAnswer('juliette', () => {
-            launchTitleScreen({
-              numero: 'TROISIÈME MANCHE',
-              intitule: 'JULIETTE DEVINE LES RÉPONSES',
-              sticker: 'juliette',
-              btnLabel: "C'EST PARTI",
-              onNext: () => launchQCMGuess('juliette', 'david', () => {
-                showScoreScreen('juliette', 'david', () => {
-                  launchTitleScreen({
-                    numero: 'QUATRIÈME MANCHE',
-                    intitule: 'DAVID DEVINE LES RÉPONSES',
-                    sticker: 'david',
-                    btnLabel: "C'EST PARTI",
-                    onNext: () => launchQCMGuess('david', 'juliette', () => {
-                      showScoreScreen('david', 'juliette', () => {
-                        launchPhase2();
-                      });
-                    }),
-                  });
-                });
-              }),
-            });
-          }),
-        });
-      }),
-    });
+    gameStart();
   };
 }
 
@@ -335,6 +340,10 @@ function advanceQCM() {
   if (state.qcm.qIndex >= 5) {
     state.qcm.onComplete();
   } else {
+    const step = state.qcm.mode === 'answer'
+      ? `qcm-${state.qcm.answerer}-answer`
+      : `qcm-${state.qcm.guesser}-guess-${state.qcm.answerer}`;
+    saveState(step);
     renderQCM();
   }
 }
@@ -400,6 +409,47 @@ function showScoreScreen(guesser, answerer, onNext) {
 }
 
 // ================================================================
+// GAME FLOW — named step functions (replaces nested callbacks)
+// ================================================================
+function gameStart() {
+  launchTitleScreen({
+    numero: 'PREMIÈRE MANCHE', intitule: 'DAVID RÉPOND AUX QUESTIONS',
+    sticker: 'david', btnLabel: "C'EST PARTI",
+    onNext: () => { saveState('qcm-david-answer'); launchQCMAnswer('david', afterDavidAnswers); },
+  });
+}
+function afterDavidAnswers() {
+  launchTitleScreen({
+    numero: 'DEUXIÈME MANCHE', intitule: 'JULIETTE RÉPOND AUX QUESTIONS',
+    sticker: 'juliette', btnLabel: "C'EST PARTI",
+    onNext: () => { saveState('qcm-juliette-answer'); launchQCMAnswer('juliette', afterJulietteAnswers); },
+  });
+}
+function afterJulietteAnswers() {
+  launchTitleScreen({
+    numero: 'TROISIÈME MANCHE', intitule: 'JULIETTE DEVINE LES RÉPONSES',
+    sticker: 'juliette', btnLabel: "C'EST PARTI",
+    onNext: () => { saveState('qcm-juliette-guess-david'); launchQCMGuess('juliette', 'david', afterJulietteGuess); },
+  });
+}
+function afterJulietteGuess() {
+  saveState('score-juliette');
+  showScoreScreen('juliette', 'david', afterScoreJuliette);
+}
+function afterScoreJuliette() {
+  launchTitleScreen({
+    numero: 'QUATRIÈME MANCHE', intitule: 'DAVID DEVINE LES RÉPONSES',
+    sticker: 'david', btnLabel: "C'EST PARTI",
+    onNext: () => { saveState('qcm-david-guess-juliette'); launchQCMGuess('david', 'juliette', afterDavidGuess); },
+  });
+}
+function afterDavidGuess() {
+  saveState('score-david');
+  showScoreScreen('david', 'juliette', afterScoreDavid);
+}
+function afterScoreDavid() { launchPhase2(); }
+
+// ================================================================
 // PHASE 2 — LAUNCH
 // ================================================================
 function launchPhase2() {
@@ -408,7 +458,7 @@ function launchPhase2() {
     intitule: 'JULIETTE EN FINALE',
     sticker: 'juliette',
     btnLabel: "C'EST PARTI",
-    onNext: () => launchFinale('juliette'),
+    onNext: () => { saveState('finale-juliette'); launchFinale('juliette'); },
   });
 }
 
@@ -466,6 +516,7 @@ function finaleAction(participant, action) {
   if (action === 'skip') {
     fs.passedQueue.push(fs.curQIdx);
     renderFinale(participant);
+    saveState(`finale-${participant}`);
     return;
   }
 
@@ -499,6 +550,7 @@ function finaleAction(participant, action) {
   fs.hearts[fs.heartIdx] = 'current';
   renderHearts(participant);
   renderFinale(participant);
+  saveState(`finale-${participant}`);
 }
 
 function renderHearts(participant) {
@@ -538,15 +590,91 @@ function showEndScreen(participant) {
         intitule: 'DAVID EN FINALE',
         sticker: 'david',
         btnLabel: "C'EST PARTI",
-        onNext: () => launchFinale('david'),
+        onNext: () => { saveState('finale-david'); launchFinale('david'); },
       });
     };
   } else {
     btnEl.textContent = 'FIN DU JEU';
-    btnEl.onclick = () => showScreen('screen-splash');
+    btnEl.onclick = () => {
+      clearSavedState();
+      showScreen('screen-splash');
+      initSplash();
+    };
   }
 
   showScreen('screen-endscreen');
+}
+
+// ================================================================
+// RESUME FROM SAVE
+// ================================================================
+function resumeGame() {
+  const save = loadSavedState();
+  if (!save) { showScreen('screen-splash'); return; }
+
+  Object.assign(state.phase1, save.phase1 || {});
+
+  if (save.qcm) {
+    state.qcm.mode      = save.qcm.mode;
+    state.qcm.guesser   = save.qcm.guesser;
+    state.qcm.answerer  = save.qcm.answerer;
+    state.qcm.qIndex    = save.qcm.qIndex || 0;
+    state.qcm.selected  = null;
+    state.qcm.revealed  = false;
+    state.qcm.wasChecked = [false, false, false];
+  }
+
+  if (save.finale) {
+    ['juliette', 'david'].forEach(p => {
+      const fs = save.finale[p];
+      if (!fs) return;
+      // Put the currently-displayed question back at the head of the queue
+      if (fs.curQIdx !== null && fs.curQIdx !== undefined) {
+        fs.mainQueue.unshift(fs.curQIdx);
+        fs.curQIdx = null;
+      }
+      Object.assign(state.finale[p], fs);
+    });
+  }
+
+  const onCompleteMap = {
+    'qcm-david-answer':         afterDavidAnswers,
+    'qcm-juliette-answer':      afterJulietteAnswers,
+    'qcm-juliette-guess-david': afterJulietteGuess,
+    'qcm-david-guess-juliette': afterDavidGuess,
+  };
+
+  const step = save.step;
+
+  if (onCompleteMap[step]) {
+    state.qcm.onComplete = onCompleteMap[step];
+    renderQCM();
+  } else if (step === 'score-juliette') {
+    showScoreScreen('juliette', 'david', afterScoreJuliette);
+  } else if (step === 'score-david') {
+    showScoreScreen('david', 'juliette', afterScoreDavid);
+  } else if (step === 'finale-juliette') {
+    restoreFinale('juliette');
+  } else if (step === 'end-juliette') {
+    showEndScreen('juliette');
+  } else if (step === 'finale-david') {
+    restoreFinale('david');
+  } else if (step === 'end-david') {
+    showEndScreen('david');
+  } else {
+    clearSavedState();
+    showScreen('screen-splash');
+  }
+}
+
+function restoreFinale(participant) {
+  document.getElementById('btn-finale-success').onclick = () => finaleAction(participant, 'success');
+  document.getElementById('btn-finale-failure').onclick = () => finaleAction(participant, 'failure');
+  document.getElementById('btn-finale-skip').onclick    = () => finaleAction(participant, 'skip');
+  renderHearts(participant);
+  renderFinale(participant);
+  showScreen('screen-finale');
+  startFinaleTimer(participant);
 }
 
 // ================================================================
