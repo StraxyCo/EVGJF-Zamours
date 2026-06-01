@@ -47,13 +47,18 @@ function newFinaleState() {
 // ================================================================
 // AUDIO
 // ================================================================
-const bgMusic = new Audio('/public/audio/background.mp3');
-bgMusic.loop = true;
-
 const sfx = {};
-['questionSuccess', 'questionFailure', 'questionSkip', 'finaleSuccess', 'finaleFailure', 'gong'].forEach(name => {
+['questionSuccess', 'questionFailure', 'questionSkip', 'finaleSuccess', 'finaleFailure', 'gong', 'questionPause'].forEach(name => {
   sfx[name] = new Audio(`/public/audio/${name}.mp3`);
 });
+
+const countdownMusic = new Audio('/public/audio/countdown.mp3');
+countdownMusic.loop = true;
+
+function startCountdown()  { countdownMusic.currentTime = 0; countdownMusic.play().catch(() => {}); }
+function pauseCountdown()  { countdownMusic.pause(); }
+function resumeCountdown() { countdownMusic.play().catch(() => {}); }
+function stopCountdown()   { countdownMusic.pause(); countdownMusic.currentTime = 0; }
 
 // ================================================================
 // PERSISTENCE — localStorage
@@ -105,6 +110,7 @@ function startFinaleTimer(participant, fromTime = 60) {
 
     if (finaleTimeLeft <= 0) {
       stopFinaleTimer();
+      stopCountdown();
       playSfx('gong');
       const fs = state.finale[participant];
       fs.result = 'lost';
@@ -122,9 +128,12 @@ function setupPauseButton(participant) {
     const actionIds = ['btn-finale-success', 'btn-finale-failure', 'btn-finale-skip'];
     if (finalePaused) {
       stopFinaleTimer();
+      pauseCountdown();
+      playSfx('questionPause');
       actionIds.forEach(id => { document.getElementById(id).disabled = true; });
     } else {
       actionIds.forEach(id => { document.getElementById(id).disabled = false; });
+      resumeCountdown();
       startFinaleTimer(participant, finaleTimeLeft);
     }
     renderPauseButton();
@@ -153,7 +162,6 @@ function updateTimerDisplay(timeLeft) {
   el.classList.toggle('urgent', timeLeft <= 10);
 }
 
-function playBg() { bgMusic.play().catch(() => {}); }
 function playSfx(name) {
   const s = sfx[name];
   if (!s) return;
@@ -189,7 +197,6 @@ function showScreen(id) {
 function initSplash() {
   document.getElementById('btn-splash').onclick = () => {
     clearSavedState();
-    playBg();
     showScreen('screen-generique');
     startGenerique();
   };
@@ -197,7 +204,7 @@ function initSplash() {
   const resumeBtn = document.getElementById('btn-resume');
   if (hasSavedState()) {
     resumeBtn.style.display = 'block';
-    resumeBtn.onclick = () => { playBg(); resumeGame(); };
+    resumeBtn.onclick = () => { resumeGame(); };
   } else {
     resumeBtn.style.display = 'none';
   }
@@ -514,6 +521,7 @@ function launchFinale(participant) {
   renderFinale(participant);
   showScreen('screen-finale');
   setupPauseButton(participant);
+  startCountdown();
   startFinaleTimer(participant);
 }
 
@@ -559,6 +567,7 @@ function finaleAction(participant, action) {
     fs.hearts[fs.heartIdx] = 'success';
     fs.result = 'won';
     stopFinaleTimer();
+    stopCountdown();
     finalePaused = false;
     renderHearts(participant);
     playSfx('finaleSuccess');
@@ -569,6 +578,7 @@ function finaleAction(participant, action) {
     fs.hearts[fs.heartIdx] = 'failure';
     fs.result = 'lost';
     stopFinaleTimer();
+    stopCountdown();
     finalePaused = false;
     renderHearts(participant);
     playSfx('finaleFailure');
@@ -706,6 +716,7 @@ function restoreFinale(participant) {
   renderFinale(participant);
   showScreen('screen-finale');
   setupPauseButton(participant);
+  startCountdown();
   startFinaleTimer(participant);
 }
 
