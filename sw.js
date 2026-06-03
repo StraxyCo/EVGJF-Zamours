@@ -1,4 +1,4 @@
-const CACHE = 'zamours-v2';
+const CACHE = 'zamours-v3';
 
 const ASSETS = [
   '/',
@@ -14,7 +14,8 @@ const ASSETS = [
   '/public/images/heart.svg',
   '/public/images/check.svg',
   '/public/images/close.svg',
-  '/public/images/pass.svg',
+  '/public/images/pause.svg',
+  '/public/images/play.svg',
   '/public/fonts/BebasNeue-Regular.woff2',
   '/public/fonts/Damion-Regular.woff2',
   '/public/audio/countdown.mp3',
