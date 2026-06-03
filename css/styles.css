@@ -473,23 +473,32 @@ body {
   color: var(--red-main);
 }
 
-/* Hearts quinconce grid */
+/* Question counter */
+.finale-counter {
+  font-family: 'BebasNeue', sans-serif;
+  font-size: 56px;
+  color: var(--white-secondary);
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+/* Hearts quinconce grid — 3 cols × 5 rows = 15 hearts */
 .hearts-container {
   display: flex;
-  gap: 20px;
+  gap: 16px;
   align-items: flex-start;
 }
 .hearts-col {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 16px;
 }
 .hearts-col-mid {
-  margin-top: 112px; /* (200px + 24px) / 2 */
+  margin-top: 74px; /* (120px + 16px) / 2 */
 }
 .heart-icon {
-  width: 200px;
-  height: 200px;
+  width: 120px;
+  height: 120px;
   background-color: var(--white-secondary);
   -webkit-mask: url('/public/images/heart.svg') center/contain no-repeat;
   mask: url('/public/images/heart.svg') center/contain no-repeat;
@@ -497,7 +506,6 @@ body {
   flex-shrink: 0;
 }
 .heart-icon.state-idle    { background-color: var(--white-secondary); }
-.heart-icon.state-current { background-color: var(--yellow-main); }
 .heart-icon.state-success { background-color: var(--green-main); }
 .heart-icon.state-failure { background-color: var(--red-main); }
 
@@ -557,4 +565,152 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   display: none;
+}
+
+/* ============================================================
+   RULES SCREEN
+   ============================================================ */
+#screen-rules {
+  gap: 48px;
+  padding: 80px 160px;
+}
+.rules-minor {
+  font-family: 'BebasNeue', sans-serif;
+  font-size: 52px;
+  color: var(--white-secondary);
+  text-align: center;
+  max-width: 1400px;
+  line-height: 1.15;
+  letter-spacing: 1px;
+}
+.rules-major {
+  font-family: 'BebasNeue', sans-serif;
+  font-size: 96px;
+  color: var(--white);
+  text-align: center;
+  max-width: 1400px;
+  line-height: 1.1;
+  letter-spacing: 1px;
+}
+
+/* ============================================================
+   SCORE SCREENS — shared tokens
+   ============================================================ */
+.score-badge {
+  font-family: 'BebasNeue', sans-serif;
+  font-size: 32px;
+  letter-spacing: 0.25em;
+  color: var(--bg-dark);
+  background: var(--yellow-main);
+  padding: 0.3em 1.8em;
+  border-radius: 2em;
+}
+.score-title {
+  font-family: 'BebasNeue', sans-serif;
+  font-size: 140px;
+  color: var(--white);
+  letter-spacing: 0.1em;
+  line-height: 1;
+}
+.score-row {
+  display: flex;
+  align-items: center;
+  gap: 80px;
+}
+.score-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 380px;
+  background: rgba(0,0,0,0.5);
+  border: 3px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 48px 64px;
+  transition: border-color 0.4s, background 0.4s, box-shadow 0.4s;
+}
+.score-card--winner {
+  border-color: var(--yellow-main);
+  background: rgba(212,175,55,0.1);
+  box-shadow: 0 0 60px rgba(212,175,55,0.25);
+}
+.score-card__leader {
+  position: absolute;
+  top: -1rem;
+  right: -1rem;
+  font-family: 'BebasNeue', sans-serif;
+  font-size: 24px;
+  letter-spacing: 0.15em;
+  color: var(--bg-dark);
+  background: var(--yellow-main);
+  padding: 0.2em 0.8em;
+  border-radius: 2em;
+  display: none;
+}
+.score-card__name {
+  font-family: 'BebasNeue', sans-serif;
+  font-size: 52px;
+  color: var(--white-secondary);
+  letter-spacing: 0.12em;
+}
+.score-card__value {
+  font-family: 'BebasNeue', sans-serif;
+  font-size: 180px;
+  color: var(--yellow-main);
+  line-height: 0.9;
+}
+.score-card__unit {
+  font-family: 'BebasNeue', sans-serif;
+  font-size: 32px;
+  letter-spacing: 0.2em;
+  color: var(--white-secondary);
+}
+.score-vs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.score-vs__text {
+  font-family: 'BebasNeue', sans-serif;
+  font-size: 72px;
+  letter-spacing: 0.2em;
+  color: var(--white-secondary);
+}
+
+/* QCM combined score screen */
+#screen-qcm-score {
+  gap: 40px;
+}
+
+/* Final score screen */
+#screen-finalscore {
+  gap: 32px;
+}
+.score-card--final .score-card__value {
+  font-size: 140px;
+}
+.score-card__breakdown {
+  font-family: 'BebasNeue', sans-serif;
+  font-size: 40px;
+  color: var(--white-secondary);
+  letter-spacing: 0.08em;
+  text-align: center;
+  line-height: 1.3;
+}
+.score-card__sub {
+  color: var(--yellow-main);
+  font-size: 52px;
+}
+.score-card__sub-unit {
+  color: var(--white-secondary);
+  font-size: 36px;
+}
+.score-winner-text {
+  font-family: 'BebasNeue', sans-serif;
+  font-size: 80px;
+  color: var(--yellow-main);
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-shadow: 0 0 40px rgba(212,175,55,0.5);
 }
