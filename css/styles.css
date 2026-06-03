@@ -607,7 +607,7 @@ body {
 }
 .score-title {
   font-family: 'BebasNeue', sans-serif;
-  font-size: 140px;
+  font-size: 120px;
   color: var(--white);
   letter-spacing: 0.1em;
   line-height: 1;
@@ -622,12 +622,12 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  min-width: 380px;
+  gap: 6px;
+  min-width: 360px;
   background: rgba(0,0,0,0.5);
   border: 3px solid rgba(255,255,255,0.1);
   border-radius: 20px;
-  padding: 48px 64px;
+  padding: 40px 56px;
   transition: border-color 0.4s, background 0.4s, box-shadow 0.4s;
 }
 .score-card--winner {
@@ -685,18 +685,18 @@ body {
 
 /* Final score screen */
 #screen-finalscore {
-  gap: 32px;
+  gap: 24px;
 }
 .score-card--final .score-card__value {
-  font-size: 140px;
+  font-size: 120px;
 }
 .score-card__breakdown {
   font-family: 'BebasNeue', sans-serif;
-  font-size: 40px;
+  font-size: 36px;
   color: var(--white-secondary);
   letter-spacing: 0.08em;
   text-align: center;
-  line-height: 1.3;
+  line-height: 1.2;
 }
 .score-card__sub {
   color: var(--yellow-main);
@@ -708,7 +708,7 @@ body {
 }
 .score-winner-text {
   font-family: 'BebasNeue', sans-serif;
-  font-size: 80px;
+  font-size: 72px;
   color: var(--yellow-main);
   letter-spacing: 0.08em;
   text-align: center;
